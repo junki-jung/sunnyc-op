@@ -315,7 +315,7 @@ class CarInterface(CarInterfaceBase):
       ret.steerRatio = 14.5
 
 
-    ret.radarTimeStep = 0.05
+    ret.radarTimeStep = 0.02
 
     if ret.centerToFront == 0:
       ret.centerToFront = ret.wheelbase * 0.4
