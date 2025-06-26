@@ -24,19 +24,18 @@ def process_hud_alert(enabled, fingerprint, hud_control):
 
   sys_warning = (hud_control.visualAlert in (VisualAlert.steerRequired, VisualAlert.ldw))
 
-  # initialize to no line visible
-  sys_state = 1
-  
-  # G90 차량에 대해 FCA HUD 오류 방지용 차선/경고값 강제 설정
+  # G90 차량에 대해서 FCA HUD 오류 방지용 예외 처리
   if fingerprint == CAR.GENESIS_G90:
     left_lane = True
     right_lane = True
     left_lane_warning = 0
     right_lane_warning = 0
-    sys_warning = False
     sys_state = 3 if enabled else 4
-    return sys_warning, sys_state, left_lane_warning, right_lane_warning  
+    sys_warning = False
+    return sys_warning, sys_state, left_lane_warning, right_lane_warning
   
+  # initialize to no line visible
+  sys_state = 1
   if hud_control.leftLaneVisible and hud_control.rightLaneVisible or sys_warning:  # HUD alert only display when LKAS status is active
     sys_state = 3 if enabled or sys_warning else 4
   elif hud_control.leftLaneVisible:
